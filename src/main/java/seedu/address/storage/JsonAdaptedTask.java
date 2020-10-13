@@ -4,7 +4,12 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.project.Deadline;
+import seedu.address.model.project.Participation;
 import seedu.address.model.task.Task;
+
+import java.time.LocalDate;
+import java.util.Set;
 
 /**
  * Jackson-friendly version of {@link Task}.
@@ -12,28 +17,28 @@ import seedu.address.model.task.Task;
 class JsonAdaptedTask {
 
     public final String taskName;
-    //    private final String description;
-    //    private final LocalDate publishDate;
-    //    private final Deadline deadline;
-    //    private final double progress;
-    //    private final boolean isDone;
-    //    private final Set<Participation> assignees;
+        private final String description;
+        private final LocalDate publishDate;
+        private final Deadline deadline;
+        private final double progress;
+        private final boolean isDone;
+        private final Set<Participation> assignees;
 
     /**
      * Constructs a {@code JsonAdaptedTask} with the given {@code taskName}.
      */
     @JsonCreator
-    public JsonAdaptedTask(String taskName) {
-        //            , String description, LocalDate publishDate,
-        //                           Deadline deadline, double progress, boolean isDone,
-        //                           Set<Participation> assignees) {
+    public JsonAdaptedTask(String taskName
+                    , String description, LocalDate publishDate,
+                                   Deadline deadline, double progress, boolean isDone,
+                                   Set<Participation> assignees) {
         this.taskName = taskName;
-        //        this.description = description;
-        //        this.publishDate = publishDate;
-        //        this.deadline = deadline;
-        //        this.progress = progress;
-        //        this.isDone = isDone;
-        //        this.assignees = assignees;
+                this.description = description;
+                this.publishDate = publishDate;
+                this.deadline = deadline;
+                this.progress = progress;
+                this.isDone = isDone;
+                this.assignees = assignees;
     }
 
     /**
@@ -41,12 +46,12 @@ class JsonAdaptedTask {
      */
     public JsonAdaptedTask(Task source) {
         taskName = source.taskName;
-        //        description = source.getDescription();
-        //        publishDate = source.getPublishDate();
-        //        deadline = source.getDeadline();
-        //        progress = source.getProgress();
-        //        isDone = source.isDone();
-        //        assignees = source.getAssignees();
+                description = source.getDescription();
+                publishDate = source.getPublishDate();
+                deadline = source.getDeadline();
+                progress = source.getProgress();
+                isDone = source.isDone();
+                assignees = source.getAssignees();
     }
 
     @JsonValue
@@ -54,35 +59,35 @@ class JsonAdaptedTask {
         return taskName;
     }
 
-    //    @JsonValue
-    //    public String getDescription() {
-    //        return description;
-    //    }
-    //
-    //    @JsonValue
-    //    public LocalDate getPublishDate() {
-    //        return publishDate;
-    //    }
-    //
-    //    @JsonValue
-    //    public Deadline getDeadline() {
-    //        return deadline;
-    //    }
-    //
-    //    @JsonValue
-    //    public double getProgress() {
-    //        return progress;
-    //    }
-    //
-    //    @JsonValue
-    //    public boolean isDone() {
-    //        return isDone;
-    //    }
-    //
-    //    @JsonValue
-    //    public Set<Participation> getAssignees() {
-    //        return assignees;
-    //    }
+        @JsonValue
+        public String getDescription() {
+            return description;
+        }
+
+        @JsonValue
+        public LocalDate getPublishDate() {
+            return publishDate;
+        }
+
+        @JsonValue
+        public Deadline getDeadline() {
+            return deadline;
+        }
+
+        @JsonValue
+        public double getProgress() {
+            return progress;
+        }
+
+        @JsonValue
+        public boolean isDone() {
+            return isDone;
+        }
+
+        @JsonValue
+        public Set<Participation> getAssignees() {
+            return assignees;
+        }
 
     /**
      * Converts this Jackson-friendly adapted task object into the model's {@code Task} object.
