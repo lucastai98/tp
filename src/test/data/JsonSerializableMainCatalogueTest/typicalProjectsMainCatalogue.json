@@ -6,21 +6,57 @@
     "repoUrl": "https://github.com/a/a.git",
     "projectDescription" : "An app for you to speak your mind",
     "projectTagged" : [ "linguistics" ],
-    "occupied" : [ "Write DG", "Write user stories" ]
+    "projectOccupied" : [ {
+      "taskName" : "Write DG",
+      "description" : null,
+      "publishDate" : "2020-10-13",
+      "deadline" : null,
+      "progress" : 0.0,
+      "isDone" : false,
+      "assignees" : [ ],
+      "done" : false
+    }, {
+      "taskName" : "Write user stories",
+      "description" : null,
+      "publishDate" : "2020-10-13",
+      "deadline" : null,
+      "progress" : 0.0,
+      "isDone" : false,
+      "assignees" : [ ],
+      "done" : false
+    } ]
   }, {
     "projectName" : "Brick No Meier",
     "deadline": "21-03-2020 00:00:00",
     "repoUrl": "https://github.com/b/b.git",
     "projectDescription" : "To destroy the brick and mortar",
     "projectTagged" : [ "amazon", "evil" ],
-    "occupied" : [ "Practice presentation" ]
+    "projectOccupied" : [ {
+      "taskName" : "Practice presentation",
+      "description" : null,
+      "publishDate" : "2020-10-13",
+      "deadline" : null,
+      "progress" : 0.0,
+      "isDone" : false,
+      "assignees" : [ ],
+      "done" : false
+    } ]
   }, {
     "projectName" : "Caractive",
     "deadline": "21-03-2020 00:00:00",
     "repoUrl": "https://github.com/c/c.git",
     "projectDescription" : "best car app for tesla",
     "projectTagged" : [ "electric" ],
-    "occupied" : [ "Integrate with tesla" ]
+    "projectOccupied" : [ {
+      "taskName" : "Integrate with tesla",
+      "description" : null,
+      "publishDate" : "2020-10-13",
+      "deadline" : null,
+      "progress" : 0.0,
+      "isDone" : false,
+      "assignees" : [ ],
+      "done" : false
+    } ]
   }, {
     "projectName" : "Dayum Snap",
     "deadline": "21-03-2020 00:00:00",
