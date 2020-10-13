@@ -17,7 +17,7 @@ import seedu.address.model.project.Participation;
 public class Task {
     public final String taskName;
     private final String description;
-    private final LocalDate publishDate;
+    private LocalDate publishDate;
     private final Deadline deadline;
     private final double progress;
     private final boolean isDone;
@@ -49,6 +49,10 @@ public class Task {
         return publishDate;
     }
 
+    public void setPublishDate(LocalDate publishDate) {
+        this.publishDate = publishDate;
+    }
+
     public Deadline getDeadline() {
         return deadline;
     }
@@ -78,7 +82,7 @@ public class Task {
      */
     public boolean hasAssigneeWhoseNameIs(String assigneeName) {
         return assignees.stream()
-            .anyMatch(assignee -> assignee.getPerson().getPersonName().equals(assigneeName));
+                .anyMatch(assignee -> assignee.getPerson().getPersonName().equals(assigneeName));
     }
 
     public boolean addAssignee(Participation assignee) {
@@ -98,10 +102,10 @@ public class Task {
         }
         Task task = (Task) o;
         return Double.compare(task.getProgress(), getProgress()) == 0
-            && getTaskName().equals(task.getTaskName())
-            && (getDescription() == task.getDescription() || getDescription().equals(task.getDescription()))
-            && getPublishDate().equals(task.getPublishDate())
-            && Objects.equals(getDeadline(), task.getDeadline());
+                && getTaskName().equals(task.getTaskName())
+                && (getDescription() == task.getDescription() || getDescription().equals(task.getDescription()))
+                && getPublishDate().equals(task.getPublishDate())
+                && Objects.equals(getDeadline(), task.getDeadline());
     }
 
     @Override
