@@ -19,7 +19,7 @@ import seedu.address.model.util.SampleDataUtil;
  */
 public class ProjectBuilder {
 
-    public static final String DEFAULT_PROJECT_NAME = "Alice Pauline";
+    public static final String DEFAULT_PROJECT_NAME = "changeName";
     public static final String DEFAULT_DEADLINE = "29-02-2020 00:00:00";
     public static final String DEFAULT_REPOURL = "https://github.com/a/b.git";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
