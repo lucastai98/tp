@@ -18,6 +18,7 @@ import seedu.address.model.ReadOnlyMainCatalogue;
 import seedu.address.model.Status;
 import seedu.address.model.meeting.Meeting;
 import seedu.address.model.person.Person;
+import seedu.address.model.project.Participation;
 import seedu.address.model.project.Project;
 import seedu.address.model.task.Task;
 import seedu.address.storage.Storage;
@@ -70,6 +71,11 @@ public class LogicManager implements Logic {
     }
 
     @Override
+    public ObservableList<Person> getFilteredPersonList() {
+        return model.getFilteredPersonList();
+    }
+
+    @Override
     public Optional<Project> getProjectToBeDisplayedOnDashBoard() {
         return model.getProjectToBeDisplayedOnDashboard();
     }
@@ -80,13 +86,18 @@ public class LogicManager implements Logic {
     }
 
     @Override
-    public Optional<Person> getTeammateToBeDisplayedOnDashboard() {
+    public Optional<Participation> getTeammateToBeDisplayedOnDashboard() {
         return model.getTeammateToBeDisplayedOnDashboard();
     }
 
     @Override
     public Optional<Meeting> getMeetingToBeDisplayedOnDashboard() {
         return model.getMeetingToBeDisplayedOnDashboard();
+    }
+
+    @Override
+    public Optional<Person> getPersonToBeDisplayedOnDashboard() {
+        return model.getPersonToBeDisplayedOnDashboard();
     }
 
     @Override
@@ -117,6 +128,19 @@ public class LogicManager implements Logic {
     @Override
     public void quit() {
         model.quit();
+    }
+
+    @Override
+    public boolean isProjectsView() {
+        switch (getStatus()) {
+        case PROJECT_LIST:
+        case PROJECT:
+        case TASK:
+        case MEETING:
+            return true;
+        default:
+            return false;
+        }
     }
 }
 

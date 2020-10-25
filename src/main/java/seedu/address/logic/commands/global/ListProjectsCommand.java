@@ -10,9 +10,9 @@ import seedu.address.model.Model;
 /**
  * Lists all projects in the main catalogue to the user.
  */
-public class ListCommand extends Command {
+public class ListProjectsCommand extends Command {
 
-    public static final String COMMAND_WORD = "list";
+    public static final String COMMAND_WORD = "listprojects";
 
     public static final String MESSAGE_SUCCESS = "Listed all projects";
 
@@ -21,6 +21,7 @@ public class ListCommand extends Command {
     public CommandResult execute(Model model) {
         requireNonNull(model);
         model.updateFilteredProjectList(PREDICATE_SHOW_ALL_PROJECTS);
+        model.setAsProjectList();
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }

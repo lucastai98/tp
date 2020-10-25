@@ -14,6 +14,7 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.meeting.Meeting;
 import seedu.address.model.person.Person;
+import seedu.address.model.project.Participation;
 import seedu.address.model.project.Project;
 import seedu.address.model.task.Task;
 
@@ -26,12 +27,14 @@ public class ModelManager implements Model {
     private final MainCatalogue mainCatalogue;
     private final UserPrefs userPrefs;
     private final FilteredList<Project> filteredProjects;
+    private final FilteredList<Person> filteredPersons;
     //private final List<Task> filteredTasks;
     //private final List<Person> filteredTeammates;
     private Optional<Project> projectToBeDisplayedOnDashboard;
     private Optional<Task> taskToBeDisplayedOnDashboard;
-    private Optional<Person> teammateToBeDisplayedOnDashboard;
+    private Optional<Participation> teammateToBeDisplayedOnDashboard;
     private Optional<Meeting> meetingToBeDisplayedOnDashboard;
+    private Optional<Person> personToBeDisplayedOnDashboard;
 
     /**
      * Initializes a ModelManager with the given mainCatalogue and userPrefs.
@@ -45,12 +48,14 @@ public class ModelManager implements Model {
         this.mainCatalogue = new MainCatalogue(mainCatalogue);
         this.userPrefs = new UserPrefs(userPrefs);
         filteredProjects = new FilteredList<>(this.mainCatalogue.getProjectList());
+        filteredPersons = new FilteredList<>(this.mainCatalogue.getPersonList());
         //filteredTasks = new ArrayList<>();
         //filteredTeammates = new ArrayList<>();;
         this.projectToBeDisplayedOnDashboard = Optional.empty();
         this.taskToBeDisplayedOnDashboard = Optional.empty();
         this.teammateToBeDisplayedOnDashboard = Optional.empty();
         this.meetingToBeDisplayedOnDashboard = Optional.empty();
+        this.personToBeDisplayedOnDashboard = Optional.empty();
     }
 
     public ModelManager() {
@@ -128,6 +133,30 @@ public class ModelManager implements Model {
         mainCatalogue.setProject(target, editedProject);
     }
 
+    @Override
+    public boolean hasPerson(Person person) {
+        requireNonNull(person);
+        return mainCatalogue.hasPerson(person);
+    }
+
+    @Override
+    public void deletePerson(Person target) {
+        mainCatalogue.removePerson(target);
+    }
+
+    @Override
+    public void addPerson(Person person) {
+        mainCatalogue.addPerson(person);
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+    }
+
+    @Override
+    public void setPerson(Person target, Person editedPerson) {
+        requireAllNonNull(target, editedPerson);
+
+        mainCatalogue.setPerson(target, editedPerson);
+    }
+
     //=========== Scoping modifiers ===========================================================================
 
     @Override
@@ -136,23 +165,51 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public void setAsProjectList() {
+        mainCatalogue.setStatus(Status.PROJECT_LIST);
+    }
+
+    @Override
+    public void setAsPersonList() {
+        mainCatalogue.setStatus(Status.PERSON_LIST);
+    }
+
+    @Override
     public void enter(Project project) {
         mainCatalogue.enter(project);
         updateProjectToBeDisplayedOnDashboard(project);
+        personToBeDisplayedOnDashboard = Optional.empty();
+    }
+
+    @Override
+    public void enter(Person person) {
+        mainCatalogue.enter(person);
+        updatePersonToBeDisplayedOnDashboard(person);
+        projectToBeDisplayedOnDashboard = Optional.empty();
     }
 
     @Override
     public void quit() {
-        if (mainCatalogue.getStatus() == Status.PROJECT) {
+        switch (mainCatalogue.getStatus()) {
+        case PROJECT:
             projectToBeDisplayedOnDashboard = Optional.empty();
             teammateToBeDisplayedOnDashboard = Optional.empty();
             taskToBeDisplayedOnDashboard = Optional.empty();
-        } else if (mainCatalogue.getStatus() == Status.PERSON) {
-            teammateToBeDisplayedOnDashboard = Optional.empty();
-        } else if (mainCatalogue.getStatus() == Status.TASK) {
+            break;
+        case TASK:
             taskToBeDisplayedOnDashboard = Optional.empty();
-        } else if (mainCatalogue.getStatus() == Status.MEETING) {
+            break;
+        case MEETING:
             meetingToBeDisplayedOnDashboard = Optional.empty();
+            break;
+        case TEAMMATE:
+            teammateToBeDisplayedOnDashboard = Optional.empty();
+            break;
+        case PERSON:
+            personToBeDisplayedOnDashboard = Optional.empty();
+            break;
+        default:
+            break;
         }
         mainCatalogue.quit();
     }
@@ -167,7 +224,7 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public void enterTeammate(Person teammate) {
+    public void enterTeammate(Participation teammate) {
         mainCatalogue.enterTeammate(teammate);
         this.meetingToBeDisplayedOnDashboard = Optional.empty();
         this.taskToBeDisplayedOnDashboard = Optional.empty();
@@ -199,6 +256,23 @@ public class ModelManager implements Model {
     public void updateFilteredProjectList(Predicate<Project> predicate) {
         requireNonNull(predicate);
         filteredProjects.setPredicate(predicate);
+    }
+
+    //=========== Filtered Person List Accessors =============================================================
+
+    /**
+     * Returns an unmodifiable view of the list of {@code Person} backed by the internal list of
+     * {@code versionedMainCatalogue}
+     */
+    @Override
+    public ObservableList<Person> getFilteredPersonList() {
+        return filteredPersons;
+    }
+
+    @Override
+    public void updateFilteredPersonList(Predicate<Person> predicate) {
+        requireNonNull(predicate);
+        filteredPersons.setPredicate(predicate);
     }
 
     @Override
@@ -255,13 +329,13 @@ public class ModelManager implements Model {
 
     //=========== Teammate To Be Displayed On DashBoard Accessors ======================================================
     @Override
-    public void updateTeammateToBeDisplayedOnDashboard(Person teammate) {
+    public void updateTeammateToBeDisplayedOnDashboard(Participation teammate) {
         requireNonNull(teammate);
         this.teammateToBeDisplayedOnDashboard = Optional.of(teammate);
     }
 
     @Override
-    public Optional<Person> getTeammateToBeDisplayedOnDashboard() {
+    public Optional<Participation> getTeammateToBeDisplayedOnDashboard() {
         return teammateToBeDisplayedOnDashboard;
     }
 
@@ -275,6 +349,18 @@ public class ModelManager implements Model {
     @Override
     public Optional<Meeting> getMeetingToBeDisplayedOnDashboard() {
         return meetingToBeDisplayedOnDashboard;
+    }
+
+    //=========== Person To Be Displayed On DashBoard Accessors ======================================================
+    @Override
+    public void updatePersonToBeDisplayedOnDashboard(Person person) {
+        requireNonNull(person);
+        this.personToBeDisplayedOnDashboard = Optional.of(person);
+    }
+
+    @Override
+    public Optional<Person> getPersonToBeDisplayedOnDashboard() {
+        return personToBeDisplayedOnDashboard;
     }
 }
 

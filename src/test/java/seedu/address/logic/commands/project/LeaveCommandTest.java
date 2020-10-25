@@ -14,7 +14,7 @@ import seedu.address.model.project.Project;
 
 /**
  * Contains integration tests (interaction with the Model, UndoCommand and RedoCommand) and unit tests for
- * {@code StartCommand}.
+ * {@code StartProjectCommand}.
  */
 public class LeaveCommandTest {
 
@@ -24,17 +24,17 @@ public class LeaveCommandTest {
     public void execute_success() {
         Project projectToStart = model.getFilteredProjectList().get(INDEX_FIRST_PROJECT.getZeroBased());
         model.enter(projectToStart);
-        LeaveProjectViewCommand leaveProjectViewCommand = new LeaveProjectViewCommand();
+        LeaveCommand leaveCommand = new LeaveCommand();
 
-        String expectedMessage = LeaveProjectViewCommand.MESSAGE_LEAVE_SUCCESS;
+        String expectedMessage = LeaveCommand.MESSAGE_LEAVE_SUCCESS;
 
         ModelManager expectedModel = new ModelManager(model.getProjectCatalogue(), new UserPrefs());
 
-        assertCommandSuccess(leaveProjectViewCommand, model, expectedMessage, expectedModel);
+        assertCommandSuccess(leaveCommand, model, expectedMessage, expectedModel);
     }
 
     @Test
     public void equals() {
-        assertEquals(new LeaveProjectViewCommand(), new LeaveProjectViewCommand());
+        assertEquals(new LeaveCommand(), new LeaveCommand());
     }
 }

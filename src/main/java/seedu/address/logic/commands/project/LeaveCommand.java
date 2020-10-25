@@ -1,4 +1,4 @@
-package seedu.address.logic.commands.task;
+package seedu.address.logic.commands.project;
 
 import static java.util.Objects.requireNonNull;
 
@@ -7,20 +7,16 @@ import seedu.address.logic.commands.CommandResult;
 import seedu.address.model.Model;
 
 /**
- * Leaves the task view and go back to the project view.
+ * Leaves the project view and go back to the main catalogue view.
  */
-public class LeaveTaskViewCommand extends Command {
+public class LeaveCommand extends Command {
 
-    public static final String COMMAND_WORD = "leaveTaskView";
+    public static final String COMMAND_WORD = "leave";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Leaves the task detail view and go back to the project detail view.\n";
+            + ": Leaves the current detail view and go back to the upper level view.\n";
 
-    public static final String MESSAGE_LEAVE_SUCCESS = "Returned to the project page";
-
-    public LeaveTaskViewCommand() {
-
-    }
+    public static final String MESSAGE_LEAVE_SUCCESS = "Left the current detail view";
 
     @Override
     public CommandResult execute(Model model) {
@@ -32,6 +28,6 @@ public class LeaveTaskViewCommand extends Command {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || other instanceof LeaveTaskViewCommand; // instanceof handles nulls
+                || other instanceof LeaveCommand; // instanceof handles nulls
     }
 }

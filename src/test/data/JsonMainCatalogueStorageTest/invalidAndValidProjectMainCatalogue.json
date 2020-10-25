@@ -11,5 +11,6 @@
     "email": "hans@example.com",
     "projectDescription": "4th street",
     "projectTagged": [ "redundant" ]
-  } ]
+  } ],
+  "persons": [ ]
 }

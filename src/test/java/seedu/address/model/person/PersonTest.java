@@ -62,30 +62,30 @@ public class PersonTest {
     @Test
     public void isSameTeamamate() {
         // same object -> return true
-        assertTrue(DESC_A.isSameTeammate(DESC_A));
+        assertTrue(DESC_A.isSamePerson(DESC_A));
 
         // null -> return false
-        assertFalse(DESC_A.isSameTeammate(null));
+        assertFalse(DESC_A.isSamePerson(null));
 
         // different personName -> return true
         Person editedDescAPersonName = new PersonBuilder(DESC_A).withPersonName("luanqiba").build();
-        assertTrue(DESC_A.isSameTeammate(editedDescAPersonName));
+        assertTrue(DESC_A.isSamePerson(editedDescAPersonName));
 
         // different gitUserName -> return false
         Person editedDescAGitUserName = new PersonBuilder(DESC_A).withGitUserName("different").build();
-        assertFalse(DESC_A.isSameTeammate(editedDescAGitUserName));
+        assertFalse(DESC_A.isSamePerson(editedDescAGitUserName));
 
         // different phone -> return false
         Person editedDescAPhone = new PersonBuilder(DESC_A).withPhone("38283828311").build();
-        assertFalse(DESC_A.isSameTeammate(editedDescAPhone));
+        assertFalse(DESC_A.isSamePerson(editedDescAPhone));
 
         // different email -> return false
         Person editedDescAEmail = new PersonBuilder(DESC_A).withEmail("jdjf@hmail.com").build();
-        assertFalse(DESC_A.isSameTeammate(editedDescAEmail));
+        assertFalse(DESC_A.isSamePerson(editedDescAEmail));
 
         // different address -> return true
         Person editedDescAAddress = new PersonBuilder(DESC_A).withAddress("timbuktu").build();
-        assertTrue(DESC_A.isSameTeammate(editedDescAAddress));
+        assertTrue(DESC_A.isSamePerson(editedDescAAddress));
 
     }
 

@@ -77,15 +77,15 @@ public class EditTeammateCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
         Project project = model.getFilteredProjectList().get(0);
-        List<Person> lastShownList = project.getTeammates();
+        List<Participation> lastShownList = project.getTeammates();
 
         if (!project.getTeammatePresence(gitUserIndex)) {
             throw new CommandException(Messages.MESSAGE_INVALID_TEAMMATE_DISPLAYED_NAME);
         }
 
         int indexOfteammate = project.getTeammateIndex(gitUserIndex);
-        Person teammateToEdit = lastShownList.get(indexOfteammate);
-        Person editedTeammate = createEditedTeammate(teammateToEdit, editTeammateDescriptor);
+        Participation teammateToEdit = lastShownList.get(indexOfteammate);
+        Participation editedTeammate = createEditedTeammate(teammateToEdit, editTeammateDescriptor);
 
         project.removeParticipation(teammateToEdit);
         project.addParticipation(editedTeammate);
@@ -97,22 +97,26 @@ public class EditTeammateCommand extends Command {
      * Creates and returns a {@code Person} with the details of {@code personToEdit}
      * edited with {@code editPersonDescriptor}.
      */
-    private static Person createEditedTeammate(Person teammateToEdit, EditTeammateDescriptor editTeammateDescriptor) {
+    private static Participation createEditedTeammate(Participation teammateToEdit,
+                                                      EditTeammateDescriptor editTeammateDescriptor) {
         assert teammateToEdit != null;
 
+        Person personToEdit = teammateToEdit.getPerson();
         PersonName updatedTeammateName =
-            editTeammateDescriptor.getTeammateName().orElse(teammateToEdit.getPersonName());
-        GitUserName gitUserName = teammateToEdit.getGitUserName();
-        Phone updatedPhone = editTeammateDescriptor.getPhone().orElse(teammateToEdit.getPhone());
-        Email updatedEmail = editTeammateDescriptor.getEmail().orElse(teammateToEdit.getEmail());
+            editTeammateDescriptor.getTeammateName().orElse(personToEdit.getPersonName());
+        GitUserName gitUserName = personToEdit.getGitUserName();
+        Phone updatedPhone = editTeammateDescriptor.getPhone().orElse(personToEdit.getPhone());
+        Email updatedEmail = editTeammateDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editTeammateDescriptor.getAddress()
-            .orElse(teammateToEdit.getAddress());
+            .orElse(personToEdit.getAddress());
         HashMap<ProjectName, Participation> updatedParticipation =
-            editTeammateDescriptor.getParticipation().orElse(teammateToEdit.getParticipations());
+            editTeammateDescriptor.getParticipation().orElse(personToEdit.getParticipations());
+        Person editedPerson = new Person(updatedTeammateName, gitUserName, updatedPhone, updatedEmail, updatedAddress,
+                updatedParticipation);
 
         // TODO: take note gitUserName is not changed
-        return new Person(updatedTeammateName, gitUserName, updatedPhone, updatedEmail, updatedAddress,
-            updatedParticipation);
+        // TODO: add fields for participation update, and change the return value
+        return teammateToEdit;
     }
 
     @Override

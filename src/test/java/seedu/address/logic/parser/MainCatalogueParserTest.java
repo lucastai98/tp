@@ -33,19 +33,17 @@ import seedu.address.logic.commands.global.EditCommand.EditProjectDescriptor;
 import seedu.address.logic.commands.global.ExitCommand;
 import seedu.address.logic.commands.global.FindCommand;
 import seedu.address.logic.commands.global.HelpCommand;
-import seedu.address.logic.commands.global.ListCommand;
-import seedu.address.logic.commands.global.StartCommand;
-import seedu.address.logic.commands.meeting.LeaveMeetingViewCommand;
+import seedu.address.logic.commands.global.ListPersonsCommand;
+import seedu.address.logic.commands.global.ListProjectsCommand;
+import seedu.address.logic.commands.global.StartProjectCommand;
 import seedu.address.logic.commands.project.AddTaskCommand;
 import seedu.address.logic.commands.project.AssignCommand;
 import seedu.address.logic.commands.project.EditTaskCommand;
-import seedu.address.logic.commands.project.LeaveProjectViewCommand;
+import seedu.address.logic.commands.project.LeaveCommand;
 import seedu.address.logic.commands.project.NewTeammateCommand;
 import seedu.address.logic.commands.project.TaskFilterCommand;
 import seedu.address.logic.commands.project.ViewTaskCommand;
 import seedu.address.logic.commands.project.ViewTeammateCommand;
-import seedu.address.logic.commands.task.LeaveTaskViewCommand;
-import seedu.address.logic.commands.teammate.LeaveTeammateViewCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Status;
 import seedu.address.model.exceptions.InvalidScopeException;
@@ -64,21 +62,21 @@ public class MainCatalogueParserTest {
     @Test
     public void parseCommand_add() throws Exception {
         Project project = new ProjectBuilder().build();
-        AddCommand command = (AddCommand) parser.parseCommand(ProjectUtil.getAddCommand(project), Status.CATALOGUE);
+        AddCommand command = (AddCommand) parser.parseCommand(ProjectUtil.getAddCommand(project), Status.PROJECT_LIST);
         assertEquals(new AddCommand(project), command);
     }
 
     @Test
     public void parseCommand_clear() throws Exception {
-        assertTrue(parser.parseCommand(ClearCommand.COMMAND_WORD, Status.CATALOGUE) instanceof ClearCommand);
+        assertTrue(parser.parseCommand(ClearCommand.COMMAND_WORD, Status.PROJECT_LIST) instanceof ClearCommand);
         assertTrue(parser
-                .parseCommand(ClearCommand.COMMAND_WORD + " 3", Status.CATALOGUE) instanceof ClearCommand);
+                .parseCommand(ClearCommand.COMMAND_WORD + " 3", Status.PROJECT_LIST) instanceof ClearCommand);
     }
 
     @Test
     public void parseCommand_delete() throws Exception {
         DeleteCommand command = (DeleteCommand) parser.parseCommand(
-            DeleteCommand.COMMAND_WORD + " " + INDEX_FIRST_PROJECT.getOneBased(), Status.CATALOGUE);
+            DeleteCommand.COMMAND_WORD + " " + INDEX_FIRST_PROJECT.getOneBased(), Status.PROJECT_LIST);
         assertEquals(new DeleteCommand(INDEX_FIRST_PROJECT), command);
     }
 
@@ -88,15 +86,15 @@ public class MainCatalogueParserTest {
         EditProjectDescriptor descriptor = new EditProjectDescriptorBuilder(project).build();
         EditCommand command = (EditCommand) parser.parseCommand(EditCommand.COMMAND_WORD + " "
                 + INDEX_FIRST_PROJECT.getOneBased() + " " + ProjectUtil.getEditProjectDescriptorDetails(descriptor),
-            Status.CATALOGUE);
+            Status.PROJECT_LIST);
         assertEquals(new EditCommand(INDEX_FIRST_PROJECT, descriptor), command);
     }
 
     @Test
     public void parseCommand_exit() throws Exception {
-        assertTrue(parser.parseCommand(ExitCommand.COMMAND_WORD, Status.CATALOGUE) instanceof ExitCommand);
+        assertTrue(parser.parseCommand(ExitCommand.COMMAND_WORD, Status.PROJECT_LIST) instanceof ExitCommand);
         assertTrue(parser.parseCommand(ExitCommand.COMMAND_WORD + " 3",
-                Status.CATALOGUE) instanceof ExitCommand);
+                Status.PROJECT_LIST) instanceof ExitCommand);
         assertTrue(parser.parseCommand(ExitCommand.COMMAND_WORD, Status.PROJECT) instanceof ExitCommand);
         assertTrue(parser.parseCommand(ExitCommand.COMMAND_WORD + " 3",
                 Status.PROJECT) instanceof ExitCommand);
@@ -107,64 +105,49 @@ public class MainCatalogueParserTest {
         List<String> keywords = Arrays.asList("foo", "bar", "baz");
         FindCommand command = (FindCommand) parser.parseCommand(
             FindCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")),
-            Status.CATALOGUE);
+            Status.PROJECT_LIST);
         assertEquals(new FindCommand(new NameContainsKeywordsPredicate(keywords)), command);
     }
 
     @Test
     public void parseCommand_help() throws Exception {
-        assertTrue(parser.parseCommand(HelpCommand.COMMAND_WORD, Status.CATALOGUE) instanceof HelpCommand);
+        assertTrue(parser.parseCommand(HelpCommand.COMMAND_WORD, Status.PROJECT_LIST) instanceof HelpCommand);
         assertTrue(parser.parseCommand(HelpCommand.COMMAND_WORD + " 3",
-                Status.CATALOGUE) instanceof HelpCommand);
+                Status.PROJECT_LIST) instanceof HelpCommand);
         assertTrue(parser.parseCommand(HelpCommand.COMMAND_WORD, Status.PROJECT) instanceof HelpCommand);
         assertTrue(parser.parseCommand(HelpCommand.COMMAND_WORD + " 3",
                 Status.PROJECT) instanceof HelpCommand);
     }
 
     @Test
-    public void parseCommand_list() throws Exception {
-        assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD, Status.CATALOGUE) instanceof ListCommand);
-        assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD + " 3",
-                Status.CATALOGUE) instanceof ListCommand);
+    public void parseCommand_listProjects() throws Exception {
+        assertTrue(parser.parseCommand(ListProjectsCommand.COMMAND_WORD, Status.PROJECT_LIST)
+                instanceof ListProjectsCommand);
+        assertTrue(parser.parseCommand(ListProjectsCommand.COMMAND_WORD + " 3",
+                Status.PROJECT_LIST) instanceof ListProjectsCommand);
+    }
+
+    @Test
+    public void parseCommand_listPersons() throws Exception {
+        assertTrue(parser.parseCommand(ListPersonsCommand.COMMAND_WORD, Status.PERSON_LIST)
+                instanceof ListPersonsCommand);
+        assertTrue(parser.parseCommand(ListPersonsCommand.COMMAND_WORD + " 1",
+                Status.PERSON_LIST) instanceof ListPersonsCommand);
     }
 
     @Test
     public void parseCommand_start() throws Exception {
-        StartCommand command = (StartCommand) parser.parseCommand(
-            StartCommand.COMMAND_WORD + " " + INDEX_FIRST_PROJECT.getOneBased(), Status.CATALOGUE);
-        assertEquals(new StartCommand(INDEX_FIRST_PROJECT), command);
+        StartProjectCommand command = (StartProjectCommand) parser.parseCommand(
+            StartProjectCommand.COMMAND_WORD + " " + INDEX_FIRST_PROJECT.getOneBased(), Status.PROJECT_LIST);
+        assertEquals(new StartProjectCommand(INDEX_FIRST_PROJECT), command);
     }
 
     @Test
-    public void parseCommand_leaveProjectView() throws Exception {
-        assertTrue(parser.parseCommand(LeaveProjectViewCommand.COMMAND_WORD,
-                Status.PROJECT) instanceof LeaveProjectViewCommand);
-        assertTrue(parser.parseCommand(LeaveProjectViewCommand.COMMAND_WORD + " 3",
-                Status.PROJECT) instanceof LeaveProjectViewCommand);
-    }
-
-    @Test
-    public void parseCommand_leaveTaskView() throws Exception {
-        assertTrue(parser.parseCommand(LeaveTaskViewCommand.COMMAND_WORD,
-                Status.TASK) instanceof LeaveTaskViewCommand);
-        assertTrue(parser.parseCommand(LeaveTaskViewCommand.COMMAND_WORD + " 3",
-                Status.TASK) instanceof LeaveTaskViewCommand);
-    }
-
-    @Test
-    public void parseCommand_leaveTeammateView() throws Exception {
-        assertTrue(parser.parseCommand(LeaveTeammateViewCommand.COMMAND_WORD,
-                Status.PERSON) instanceof LeaveTeammateViewCommand);
-        assertTrue(parser.parseCommand(LeaveTeammateViewCommand.COMMAND_WORD + " 3",
-                Status.PERSON) instanceof LeaveTeammateViewCommand);
-    }
-
-    @Test
-    public void parseCommand_leaveMeetingView() throws Exception {
-        assertTrue(parser.parseCommand(LeaveMeetingViewCommand.COMMAND_WORD,
-                Status.MEETING) instanceof LeaveMeetingViewCommand);
-        assertTrue(parser.parseCommand(LeaveMeetingViewCommand.COMMAND_WORD + " 3",
-                Status.MEETING) instanceof LeaveMeetingViewCommand);
+    public void parseCommand_leave() throws Exception {
+        assertTrue(parser.parseCommand(LeaveCommand.COMMAND_WORD,
+                Status.PROJECT) instanceof LeaveCommand);
+        assertTrue(parser.parseCommand(LeaveCommand.COMMAND_WORD + " 3",
+                Status.TEAMMATE) instanceof LeaveCommand);
     }
 
     @Test
@@ -205,13 +188,13 @@ public class MainCatalogueParserTest {
     @Test
     public void parseCommand_unrecognisedInput_throwsParseException() {
         assertThrows(ParseException.class, String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE), ()
-            -> parser.parseCommand("", Status.CATALOGUE));
+            -> parser.parseCommand("", Status.PROJECT_LIST));
     }
 
     @Test
     public void parseCommand_unknownCommand_throwsParseException() {
         assertThrows(ParseException.class, MESSAGE_UNKNOWN_COMMAND, () -> parser.parseCommand("unknownCommand",
-            Status.CATALOGUE));
+            Status.PROJECT_LIST));
     }
 
     @Test
@@ -220,59 +203,59 @@ public class MainCatalogueParserTest {
         try {
             parser.parseCommand(
                 AssignCommand.COMMAND_WORD + " " + INDEX_FIRST_TASK.getOneBased() + " "
-                + ALICE.getPersonName(), Status.CATALOGUE);
+                + ALICE.getPersonName(), Status.PROJECT_LIST);
             fail();
         } catch (Exception e) {
-            assertEquals(new InvalidScopeException(Status.PROJECT, Status.CATALOGUE), e);
+            assertEquals(new InvalidScopeException(Status.PROJECT, Status.PROJECT_LIST), e);
         }
 
         try {
             parser.parseCommand(
                 TaskFilterCommand.COMMAND_WORD + " " + PREFIX_TASK_ASSIGNEE + ALICE.getPersonName(),
-                Status.CATALOGUE);
+                Status.PROJECT_LIST);
             fail();
         } catch (Exception e) {
-            assertEquals(new InvalidScopeException(Status.PROJECT, Status.CATALOGUE), e);
+            assertEquals(new InvalidScopeException(Status.PROJECT, Status.PROJECT_LIST), e);
         }
 
         try {
             parser.parseCommand(NewTeammateCommand.COMMAND_WORD + " "
-                + PersonUtil.getCommandInfo(ALICE), Status.CATALOGUE);
+                + PersonUtil.getCommandInfo(ALICE), Status.PROJECT_LIST);
             fail();
         } catch (Exception e) {
-            assertEquals(new InvalidScopeException(Status.PROJECT, Status.CATALOGUE), e);
+            assertEquals(new InvalidScopeException(Status.PROJECT, Status.PROJECT_LIST), e);
         }
 
         try {
             parser.parseCommand(AddTaskCommand.COMMAND_WORD + " "
-                + TaskUtil.getTaskCommand(PLAN_MEETING), Status.CATALOGUE);
+                + TaskUtil.getTaskCommand(PLAN_MEETING), Status.PROJECT_LIST);
             fail();
         } catch (Exception e) {
-            assertEquals(new InvalidScopeException(Status.PROJECT, Status.CATALOGUE), e);
+            assertEquals(new InvalidScopeException(Status.PROJECT, Status.PROJECT_LIST), e);
         }
 
         try {
             parser.parseCommand(EditTaskCommand.COMMAND_WORD + " " + PREFIX_TASK_PROGRESS
-                + " " + VALID_TASK_PROGRESS_HALF, Status.CATALOGUE);
+                + " " + VALID_TASK_PROGRESS_HALF, Status.PROJECT_LIST);
             fail();
         } catch (Exception e) {
-            assertEquals(new InvalidScopeException(Status.PROJECT, Status.CATALOGUE), e);
+            assertEquals(new InvalidScopeException(Status.PROJECT, Status.PROJECT_LIST), e);
         }
 
         try {
             parser.parseCommand(ViewTaskCommand.COMMAND_WORD + " " + INDEX_FIRST_TASK.getOneBased(),
-                Status.CATALOGUE);
+                Status.PROJECT_LIST);
             fail();
         } catch (Exception e) {
-            assertEquals(new InvalidScopeException(Status.PROJECT, Status.CATALOGUE), e);
+            assertEquals(new InvalidScopeException(Status.PROJECT, Status.PROJECT_LIST), e);
         }
 
         try {
             parser.parseCommand(ViewTeammateCommand.COMMAND_WORD + " " + INDEX_FIRST_TASK.getOneBased(),
-                    Status.CATALOGUE);
+                    Status.PROJECT_LIST);
             fail();
         } catch (Exception e) {
-            assertEquals(new InvalidScopeException(Status.PROJECT, Status.CATALOGUE), e);
+            assertEquals(new InvalidScopeException(Status.PROJECT, Status.PROJECT_LIST), e);
         }
     }
 }

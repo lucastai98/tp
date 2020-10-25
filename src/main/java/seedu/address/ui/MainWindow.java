@@ -34,7 +34,9 @@ public class MainWindow extends UiPart<Stage> {
 
     // Independent Ui parts residing in this Ui container
     private ProjectListPanel projectListPanel;
+    private PersonListPanel personListPanel;
     private ProjectDashboard projectDashboard;
+    private PersonDashboard personDashboard;
     private EmptyDashboard emptyProjectDashboard;
     private TaskDashboard taskDashboard;
     private TeammateDashboard teammateDashboard;
@@ -51,6 +53,9 @@ public class MainWindow extends UiPart<Stage> {
 
     @FXML
     private StackPane projectListPanelPlaceholder;
+
+    @FXML
+    private StackPane personListPanelPlaceholder;
 
     @FXML
     private StackPane projectDashboardPlaceHolder;
@@ -124,13 +129,32 @@ public class MainWindow extends UiPart<Stage> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        projectListPanel = new ProjectListPanel(logic.getFilteredProjectList());
-        projectListPanelPlaceholder.getChildren().add(projectListPanel.getRoot());
+        if (logic.isProjectsView()) {
+            projectListPanelPlaceholder.setVisible(true);
+            projectListPanelPlaceholder.setManaged(true);
+            projectListPanel = new ProjectListPanel(logic.getFilteredProjectList());
+            projectListPanelPlaceholder.getChildren().add(projectListPanel.getRoot());
+            personListPanelPlaceholder.setManaged(false);
+            personListPanelPlaceholder.setVisible(false);
+        } else {
+            personListPanelPlaceholder.setVisible(true);
+            personListPanelPlaceholder.setManaged(true);
+            personListPanel = new PersonListPanel(logic.getFilteredPersonList());
+            personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+            projectListPanelPlaceholder.setManaged(false);
+            projectListPanelPlaceholder.setVisible(false);
+        }
 
-        if (logic.getProjectToBeDisplayedOnDashBoard().isEmpty()) {
+        if (logic.getProjectToBeDisplayedOnDashBoard().isEmpty()
+                && logic.getPersonToBeDisplayedOnDashboard().isEmpty()) {
             emptyProjectDashboard = new EmptyDashboard(EMPTY_PROJECT_DASHBOARD_MSG);
             projectDashboardPlaceHolder.getChildren().add(emptyProjectDashboard.getRoot());
-        } else {
+        } else if (logic.getProjectToBeDisplayedOnDashBoard().isEmpty()
+                && logic.getPersonToBeDisplayedOnDashboard().isPresent()) {
+            personDashboard = new PersonDashboard(logic.getPersonToBeDisplayedOnDashboard());
+            projectDashboardPlaceHolder.getChildren().add(personDashboard.getRoot());
+        } else if (logic.getPersonToBeDisplayedOnDashboard().isEmpty()
+                && logic.getProjectToBeDisplayedOnDashBoard().isPresent()) {
             projectDashboard = new ProjectDashboard(logic.getProjectToBeDisplayedOnDashBoard());
             projectDashboardPlaceHolder.getChildren().add(projectDashboard.getRoot());
             //taskListPanel = new TaskListPanel(logic.getFilteredTaskList());

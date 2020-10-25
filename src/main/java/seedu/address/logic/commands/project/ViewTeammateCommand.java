@@ -10,7 +10,7 @@ import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
-import seedu.address.model.person.Person;
+import seedu.address.model.project.Participation;
 import seedu.address.model.project.Project;
 
 /**
@@ -40,13 +40,13 @@ public class ViewTeammateCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
         Project project = model.getProjectToBeDisplayedOnDashboard().get();
-        List<Person> lastShownList = project.getTeammates();
+        List<Participation> lastShownList = project.getTeammates();
 
         if (index.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_TEAMMATE_DISPLAYED_INDEX);
         }
 
-        Person teammate = lastShownList.get(index.getZeroBased());
+        Participation teammate = lastShownList.get(index.getZeroBased());
         model.enterTeammate(teammate);
 
         return new CommandResult(String.format(MESSAGE_VIEW_TEAMMATE_SUCCESS, teammate));

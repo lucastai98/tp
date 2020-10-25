@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<StackPane styleClass="pane-with-border" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="720.0">
+         <padding>
+            <Insets bottom="5" left="15" right="5" top="5" />
+         </padding>
+         <children>
+            <HBox alignment="CENTER_LEFT" prefHeight="91.0" prefWidth="700.0" spacing="5">
+               <children>
+                  <Label id="dashboardLabel" fx:id="personName" prefHeight="84.0" prefWidth="693.0" styleClass="cell_big_label" stylesheets="@Extensions.css" text="\$first" HBox.hgrow="ALWAYS">
+                     <font>
+                        <Font size="70.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <Label id="dashboardGUN" fx:id="gitUserName" prefHeight="82.0" prefWidth="694.0" styleClass="cell_small_label" stylesheets="@Extensions.css" text="\$git-username">
+               <font>
+                  <Font size="50.0" />
+               </font>
+            </Label>
+            <Label id="dashboardPhone" fx:id="phone" prefHeight="85.0" prefWidth="688.0" styleClass="cell_small_label" stylesheets="@Extensions.css" text="\$phone">
+               <font>
+                  <Font size="50.0" />
+               </font>
+            </Label>
+            <Label id="dashboardEmail" fx:id="email" prefHeight="74.0" prefWidth="687.0" styleClass="cell_small_label" stylesheets="@Extensions.css" text="\$email">
+               <font>
+                  <Font size="50.0" />
+               </font>
+            </Label>
+            <Label id="dashboardAddress" fx:id="address" prefHeight="74.0" prefWidth="687.0" styleClass="cell_small_label" stylesheets="@Extensions.css" text="\$address">
+               <font>
+                  <Font size="50.0" />
+               </font>
+            </Label>
+            <Label id="dashboardH1" fx:id="header1" prefHeight="74.0" prefWidth="687.0" styleClass="cell_small_label" stylesheets="@Extensions.css" text="\$header1">
+               <font>
+                  <Font size="50.0" />
+               </font>
+            </Label>
+            <FlowPane id="dashboardProjects" fx:id="projects" layoutX="25.0" layoutY="412.0" orientation="VERTICAL" prefHeight="75.0" prefWidth="700.0" stylesheets="@Extensions.css" />
+            <Label id="dashboardH2" fx:id="header2" prefHeight="74.0" prefWidth="687.0" styleClass="cell_small_label" stylesheets="@Extensions.css" text="\$header2">
+               <font>
+                  <Font size="50.0" />
+               </font>
+            </Label>
+            <FlowPane id="dashboardTask" fx:id="tasks" layoutX="25.0" layoutY="412.0" orientation="VERTICAL" prefHeight="75.0" prefWidth="700.0" stylesheets="@Extensions.css" />
+         </children>
+      </VBox>
+   </children>
+</StackPane>

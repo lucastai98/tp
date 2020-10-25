@@ -105,7 +105,7 @@ public class EditTaskCommand extends Command {
         Set<String> updatedAssignees = editTaskDescriptor.getAssignees().orElse(
                 taskToEdit.getAssignees());
 
-        Task updatedTask = new Task(updatedTaskName, updatedTaskDescription, updatedDeadline.toString(),
+        Task updatedTask = new Task(updatedTaskName, updatedTaskDescription, updatedDeadline,
                 updatedProgress, updatedIsDone);
         updatedTask.getAssignees().addAll(updatedAssignees);
 

@@ -3,12 +3,15 @@ package seedu.address.model.person;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Objects;
 
 import seedu.address.model.project.Participation;
 import seedu.address.model.project.Project;
 import seedu.address.model.project.ProjectName;
+import seedu.address.model.task.Task;
 
 /**
  * Represents a Teammate in the team.
@@ -89,6 +92,24 @@ public class Person {
         return this.listOfParticipations;
     }
 
+    /**
+     * Gets all projects that this person participates in.
+     */
+    public List<Project> getProjects() {
+        List<Project> projects = Collections.emptyList();
+        listOfParticipations.values().forEach(p -> projects.add(p.getProject()));
+        return projects;
+    }
+
+    /**
+     * Gets all tasks that this person participates in.
+     */
+    public List<Task> getTasks() {
+        List<Task> tasks = Collections.emptyList();
+        listOfParticipations.values().forEach(p -> tasks.addAll(p.getTasks()));
+        return tasks;
+    }
+
     public void updatePersonName(String newPersonNameStr) {
         personName = new PersonName(newPersonNameStr);
     }
@@ -117,17 +138,17 @@ public class Person {
      * Returns true if both teammates of the same name have at least one other identity field that is the same.
      * This defines a weaker notion of equality between two teammates.
      */
-    public boolean isSameTeammate(Person otherTeammate) {
-        if (otherTeammate == this) {
+    public boolean isSamePerson(Person otherPerson) {
+        if (otherPerson == this) {
             return true;
         }
 
-        return otherTeammate != null
-            && otherTeammate.getGitUserName().equals(getGitUserName())
-            && otherTeammate.getPhone().equals(getPhone())
-            && otherTeammate.getEmail().equals(getEmail())
-            && (otherTeammate.getPersonName().equals(getPersonName())
-            || otherTeammate.getAddress().equals(getAddress()));
+        return otherPerson != null
+            && otherPerson.getGitUserName().equals(getGitUserName())
+            && otherPerson.getPhone().equals(getPhone())
+            && otherPerson.getEmail().equals(getEmail())
+            && (otherPerson.getPersonName().equals(getPersonName())
+            || otherPerson.getAddress().equals(getAddress()));
     }
 
     /**

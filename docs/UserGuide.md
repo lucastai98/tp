@@ -214,7 +214,6 @@ Example: `addtask n/Do User Guide tp/30 done/done td/29-02-2020 00:00:00` create
 Assigns a task to a teammate within a project
 
 Format: `assign TASKINDEX TEAMMATE_GIT_USERNAME  ` (teammate git username is the unique name of each teammate)
--  
 
 Example: `assign 3 Lucas98` assigns task number 3 in the list to user *Lucas98*.
 
@@ -222,7 +221,7 @@ Example: `assign 3 Lucas98` assigns task number 3 in the list to user *Lucas98*.
 
 Creates a new task and adds it to the current project.
 
-Format: `edittask (INDEX) [n/TASK_NAME[ [tp/TASK_PROGRESS] [done/TASK_STATUS] [td/TASK_DEADLINE] `
+Format: `edittask (INDEX) [n/TASK_NAME] [tp/TASK_PROGRESS] [done/TASK_STATUS] [td/TASK_DEADLINE] `
   - INDEX field is necessary to include.
   - Any combination and any number of the subsequent fields above can be entered.
   - The information entered will replace all the data in each respective field.

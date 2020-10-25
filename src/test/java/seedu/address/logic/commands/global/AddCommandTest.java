@@ -25,6 +25,7 @@ import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.Status;
 import seedu.address.model.meeting.Meeting;
 import seedu.address.model.person.Person;
+import seedu.address.model.project.Participation;
 import seedu.address.model.project.Project;
 import seedu.address.model.task.Task;
 import seedu.address.testutil.ProjectBuilder;
@@ -165,6 +166,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public void enter(Person person) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public void quit() {
             throw new AssertionError("This method should not be called.");
         }
@@ -175,7 +181,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public void enterTeammate(Person teammate) {
+        public void enterTeammate(Participation teammate) {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -205,12 +211,12 @@ public class AddCommandTest {
         }
 
         @Override
-        public void updateTeammateToBeDisplayedOnDashboard(Person teammate) {
+        public void updateTeammateToBeDisplayedOnDashboard(Participation teammate) {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public Optional<Person> getTeammateToBeDisplayedOnDashboard() {
+        public Optional<Participation> getTeammateToBeDisplayedOnDashboard() {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -221,6 +227,56 @@ public class AddCommandTest {
 
         @Override
         public Optional<Meeting> getMeetingToBeDisplayedOnDashboard() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public boolean hasPerson(Person person) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void deletePerson(Person target) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void addPerson(Person person) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void setPerson(Person target, Person editedPerson) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public ObservableList<Person> getFilteredPersonList() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void updateFilteredPersonList(Predicate<Person> predicate) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void setAsProjectList() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void setAsPersonList() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void updatePersonToBeDisplayedOnDashboard(Person person) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public Optional<Person> getPersonToBeDisplayedOnDashboard() {
             throw new AssertionError("This method should not be called.");
         }
     }

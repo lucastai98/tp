@@ -10,6 +10,12 @@ import java.util.stream.Collectors;
 import seedu.address.model.MainCatalogue;
 import seedu.address.model.ReadOnlyMainCatalogue;
 import seedu.address.model.meeting.Meeting;
+import seedu.address.model.person.Address;
+import seedu.address.model.person.Email;
+import seedu.address.model.person.GitUserName;
+import seedu.address.model.person.Person;
+import seedu.address.model.person.PersonName;
+import seedu.address.model.person.Phone;
 import seedu.address.model.project.Deadline;
 import seedu.address.model.project.Project;
 import seedu.address.model.project.ProjectDescription;
@@ -64,6 +70,19 @@ public class SampleDataUtil {
             "false"
     ));
 
+    public static Person[] getSamplePersons() {
+        return new Person[]{
+            new Person(new PersonName("Alice Pauline"), new GitUserName("Allie32"), new Phone("12345678"),
+                    new Email("alicepauline@sample.com"), new Address("123, Jurong West Ave 6, #08-111")),
+            new Person(new PersonName("Jack Nicholson"), new GitUserName("Sparrow32"), new Phone("92883923"),
+                    new Email("jack@gmail.com"), new Address("32 Lake Road")),
+            new Person(new PersonName("Tate Mcrae"), new GitUserName("Tatey"), new Phone("92824833"),
+                    new Email("rae1992@hotmail.com"), new Address("4 Hacker Way")),
+            new Person(new PersonName("Halsey Mood"), new GitUserName("Modi"), new Phone("83928444"),
+                    new Email("modi5001000@live.com"), new Address("13 Three Quarters"))
+        };
+    }
+
     public static Project[] getSampleProjects() {
 
         return new Project[]{
@@ -103,6 +122,9 @@ public class SampleDataUtil {
         for (Project sampleProject : getSampleProjects()) {
             sampleAb.addProject(sampleProject);
         }
+        for (Person samplePerson : getSamplePersons()) {
+            sampleAb.addPerson(samplePerson);
+        }
         return sampleAb;
     }
 
@@ -122,7 +144,7 @@ public class SampleDataUtil {
         return Arrays.stream(strings)
                 .map(s -> new Task(s.get(0),
                         s.get(1),
-                        s.get(2),
+                        s.get(2)==null?null:new Deadline(s.get(2)),
                         Double.parseDouble(s.get(3)),
                         Boolean.parseBoolean(s.get(4))))
                 .collect(Collectors.toSet());

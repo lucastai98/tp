@@ -45,7 +45,7 @@ public class AddTaskCommandParser implements Parser<AddTaskCommand> {
         if (argMultimap.getValue(PREFIX_TASK_DEADLINE).isPresent()) {
             taskDeadline = ParserUtil.parseDeadline(argMultimap.getValue(PREFIX_TASK_DEADLINE).orElse(null));
         }
-        Task task = new Task(taskName, null, taskDeadline.toString(), taskProgress, taskStatus);
+        Task task = new Task(taskName, null, taskDeadline, taskProgress, taskStatus);
 
         return new AddTaskCommand(task);
     }

@@ -8,6 +8,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.person.Person;
+import seedu.address.model.project.Participation;
 
 /**
  * An UI component that displays information of a {@code Project}.
@@ -24,7 +25,7 @@ public class TeammateDashboard extends UiPart<Region> {
      * @see <a href="https://github.com/se-edu/addressbook-level4/issues/336">The issue on MainCatalogue level 4</a>
      */
 
-    public final Person teammate;
+    public final Participation teammate;
 
     @FXML
     private HBox teammateDashboardPane;
@@ -45,19 +46,22 @@ public class TeammateDashboard extends UiPart<Region> {
 
     /**
      * Creates a {@code TaskDashboardCode} with the given {@code Task} to display.
+     * @param teammate
      */
-    public TeammateDashboard(Optional<Person> teammate) {
+    public TeammateDashboard(Optional<Participation> teammate) {
         super(FXML);
         this.teammate = teammate.get();
-        teammateName.setText(this.teammate.getPersonName().toString());
-        gitUserName.setText("Teammate gitUserName: " + this.teammate.getGitUserNameString());
-        phone.setText("Teammate phone number: " + this.teammate.getPhone());
-        email.setText("Teammate email: " + this.teammate.getEmail());
-        address.setText("Teammate address: " + this.teammate.getAddress());
+        Person person = this.teammate.getPerson();
+        teammateName.setText(person.getPersonName().toString());
+        gitUserName.setText("Teammate gitUserName: " + person.getGitUserNameString());
+        phone.setText("Teammate phone number: " + person.getPhone());
+        email.setText("Teammate email: " + person.getEmail());
+        address.setText("Teammate address: " + person.getAddress());
         header1.setText("Projects participated: ");
-        this.teammate.getParticipations().keySet()
+        person.getParticipations().keySet()
                 .forEach(participation -> projects.getChildren()
                         .add(new Label(participation.toString())));
+        // TODO: Add person-project info
     }
 
     @Override

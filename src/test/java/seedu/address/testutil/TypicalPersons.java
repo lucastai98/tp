@@ -16,6 +16,11 @@ import static seedu.address.logic.commands.TeammateTestUtil.VALID_TEAMMATE_PHONE
 import static seedu.address.logic.commands.TeammateTestUtil.VALID_TEAMMATE_PHONE_B;
 import static seedu.address.logic.commands.TeammateTestUtil.VALID_TEAMMATE_PHONE_C;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import seedu.address.model.MainCatalogue;
 import seedu.address.model.person.Person;
 
 /**
@@ -46,5 +51,20 @@ public class TypicalPersons {
         .withPhone(VALID_TEAMMATE_PHONE_C)
         .withEmail(VALID_TEAMMATE_EMAIL_C)
         .withAddress(VALID_TEAMMATE_ADDRESS_C).build();
+
+    /**
+     * Returns an {@code MainCatalogue} with all the typical projects.
+     */
+    public static MainCatalogue getTypicalMainCatalogue() {
+        MainCatalogue ab = new MainCatalogue();
+        for (Person person : getTypicalPersons()) {
+            ab.addPerson(person);
+        }
+        return ab;
+    }
+
+    public static List<Person> getTypicalPersons() {
+        return new ArrayList<>(Arrays.asList(ALICE, DESC_A, DESC_B, DESC_C));
+    }
 
 }

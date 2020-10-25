@@ -20,31 +20,31 @@ import seedu.address.model.project.Project;
 
 /**
  * Contains integration tests (interaction with the Model, UndoCommand and RedoCommand) and unit tests for
- * {@code StartCommand}.
+ * {@code StartProjectCommand}.
  */
-public class StartCommandTest {
+public class StartProjectCommandTest {
 
     private Model model = new ModelManager(getTypicalMainCatalogue(), new UserPrefs());
 
     @Test
     public void execute_validIndexUnfilteredList_success() {
         Project projectToStart = model.getFilteredProjectList().get(INDEX_FIRST_PROJECT.getZeroBased());
-        StartCommand startCommand = new StartCommand(INDEX_FIRST_PROJECT);
+        StartProjectCommand startProjectCommand = new StartProjectCommand(INDEX_FIRST_PROJECT);
 
-        String expectedMessage = String.format(StartCommand.MESSAGE_START_PROJECT_SUCCESS, projectToStart);
+        String expectedMessage = String.format(StartProjectCommand.MESSAGE_START_PROJECT_SUCCESS, projectToStart);
 
         ModelManager expectedModel = new ModelManager(model.getProjectCatalogue(), new UserPrefs());
         expectedModel.enter(projectToStart);
 
-        assertCommandSuccess(startCommand, model, expectedMessage, expectedModel);
+        assertCommandSuccess(startProjectCommand, model, expectedMessage, expectedModel);
     }
 
     @Test
     public void execute_invalidIndexUnfilteredList_throwsCommandException() {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredProjectList().size() + 1);
-        StartCommand startCommand = new StartCommand(outOfBoundIndex);
+        StartProjectCommand startProjectCommand = new StartProjectCommand(outOfBoundIndex);
 
-        assertCommandFailure(startCommand, model, Messages.MESSAGE_INVALID_PROJECT_DISPLAYED_INDEX);
+        assertCommandFailure(startProjectCommand, model, Messages.MESSAGE_INVALID_PROJECT_DISPLAYED_INDEX);
     }
 
     @Test
@@ -52,15 +52,15 @@ public class StartCommandTest {
         showProjectAtIndex(model, INDEX_FIRST_PROJECT);
 
         Project projectToStart = model.getFilteredProjectList().get(INDEX_FIRST_PROJECT.getZeroBased());
-        StartCommand startCommand = new StartCommand(INDEX_FIRST_PROJECT);
+        StartProjectCommand startProjectCommand = new StartProjectCommand(INDEX_FIRST_PROJECT);
 
-        String expectedMessage = String.format(StartCommand.MESSAGE_START_PROJECT_SUCCESS, projectToStart);
+        String expectedMessage = String.format(StartProjectCommand.MESSAGE_START_PROJECT_SUCCESS, projectToStart);
 
         Model expectedModel = new ModelManager(model.getProjectCatalogue(), new UserPrefs());
         expectedModel.enter(projectToStart);
         showProjectAtIndex(expectedModel, INDEX_FIRST_PROJECT);
 
-        assertCommandSuccess(startCommand, model, expectedMessage, expectedModel);
+        assertCommandSuccess(startProjectCommand, model, expectedMessage, expectedModel);
     }
 
     @Test
@@ -71,21 +71,21 @@ public class StartCommandTest {
         // ensures that outOfBoundIndex is still in bounds of main catalogue list
         assertTrue(outOfBoundIndex.getZeroBased() < model.getProjectCatalogue().getProjectList().size());
 
-        StartCommand startCommand = new StartCommand(outOfBoundIndex);
+        StartProjectCommand startProjectCommand = new StartProjectCommand(outOfBoundIndex);
 
-        assertCommandFailure(startCommand, model, Messages.MESSAGE_INVALID_PROJECT_DISPLAYED_INDEX);
+        assertCommandFailure(startProjectCommand, model, Messages.MESSAGE_INVALID_PROJECT_DISPLAYED_INDEX);
     }
 
     @Test
     public void equals() {
-        StartCommand startFirstCommand = new StartCommand(INDEX_FIRST_PROJECT);
-        StartCommand startSecondCommand = new StartCommand(INDEX_SECOND_PROJECT);
+        StartProjectCommand startFirstCommand = new StartProjectCommand(INDEX_FIRST_PROJECT);
+        StartProjectCommand startSecondCommand = new StartProjectCommand(INDEX_SECOND_PROJECT);
 
         // same object -> returns true
         assertTrue(startFirstCommand.equals(startFirstCommand));
 
         // same values -> returns true
-        StartCommand startFirstCommandCopy = new StartCommand(INDEX_FIRST_PROJECT);
+        StartProjectCommand startFirstCommandCopy = new StartProjectCommand(INDEX_FIRST_PROJECT);
         assertTrue(startFirstCommand.equals(startFirstCommandCopy));
 
         // different types -> returns false

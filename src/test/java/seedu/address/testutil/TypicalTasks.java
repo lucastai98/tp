@@ -1,5 +1,6 @@
 package seedu.address.testutil;
 
+import seedu.address.model.project.Deadline;
 import seedu.address.model.task.Task;
 
 public class TypicalTasks {
@@ -11,5 +12,5 @@ public class TypicalTasks {
     public static final boolean VALID_TASK_DONE = true;
 
     public static final Task PLAN_MEETING = new Task(VALID_TASK_NAME, VALID_TASK_DESCRIPTION,
-            VALID_TASK_DEADLINE, VALID_TASK_PROGRESS, VALID_TASK_DONE);
+            new Deadline(VALID_TASK_DEADLINE), VALID_TASK_PROGRESS, VALID_TASK_DONE);
 }

@@ -108,12 +108,20 @@ class JsonAdaptedTask {
             throw new IllegalValueException(Task.IS_DONE_MESSAGE_CONSTRAINTS);
         }
         Task task = null;
-        task = new Task(taskName,
-                description,
-                deadline,
-                Double.parseDouble(progress),
-                Boolean.parseBoolean(isDone));
+        if(deadline==null){
+            task = new Task(taskName,
+                    description,
+                    null,
+                    Double.parseDouble(progress),
+                    Boolean.parseBoolean(isDone));
 
+        }else {
+            task = new Task(taskName,
+                    description,
+                    new Deadline(deadline),
+                    Double.parseDouble(progress),
+                    Boolean.parseBoolean(isDone));
+        }
 
         task.setPublishDate(LocalDate.parse(publishDate));
         assignees.forEach(task::addAssignee);

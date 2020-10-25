@@ -12,6 +12,7 @@ import seedu.address.model.ReadOnlyMainCatalogue;
 import seedu.address.model.Status;
 import seedu.address.model.meeting.Meeting;
 import seedu.address.model.person.Person;
+import seedu.address.model.project.Participation;
 import seedu.address.model.project.Project;
 import seedu.address.model.task.Task;
 
@@ -38,6 +39,9 @@ public interface Logic {
     /** Returns an unmodifiable view of the filtered list of projects */
     ObservableList<Project> getFilteredProjectList();
 
+    /** Returns an unmodifiable view of the filtered list of persons */
+    ObservableList<Person> getFilteredPersonList();
+
     /**
      * Gets the project to be displayed on dashboard.
      * @return the project to be displayed on dashboard.
@@ -52,12 +56,17 @@ public interface Logic {
     /**
      * Gets the teammate to be displayed on dashboard.
      */
-    Optional<Person> getTeammateToBeDisplayedOnDashboard();
+    Optional<Participation> getTeammateToBeDisplayedOnDashboard();
 
     /**
      * Gets the meeting to be displayed on dashboard.
      */
     Optional<Meeting> getMeetingToBeDisplayedOnDashboard();
+
+    /**
+     * Gets the person to be displayed on dashboard.
+     */
+    Optional<Person> getPersonToBeDisplayedOnDashboard();
 
     /**
      * Returns the user prefs' main catalogue file path.
@@ -88,6 +97,11 @@ public interface Logic {
      * Quits the current project view.
      */
     void quit();
+
+    /**
+     * Checks whether the app is viewing list of projects.
+     */
+    boolean isProjectsView();
 }
 
 ///** Returns an unmodifiable view of the filtered list of tasks */
