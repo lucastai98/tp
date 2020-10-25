@@ -113,7 +113,8 @@ public class SampleDataUtil {
             new Project(new ProjectName("Reuletan"), new Deadline("21-04-2021 00:00:00"),
                     new RepoUrl("http://github.com/a/b.git"),
                     new ProjectDescription("Brings low cost investment to the " + "masses"),
-                    getTagSet("colleagues"), new HashMap<>(), getTaskSet(task6), getMeetingSet("10-10-2020 00:00:00"))
+                    getTagSet("colleagues"), new HashMap<>(), getTaskSet(task6),
+                    getMeetingSet("10-10-2020 00:00:00"))
         };
     }
 
@@ -144,7 +145,7 @@ public class SampleDataUtil {
         return Arrays.stream(strings)
                 .map(s -> new Task(s.get(0),
                         s.get(1),
-                        s.get(2)==null?null:new Deadline(s.get(2)),
+                        s.get(2) == null ? null : new Deadline(s.get(2)),
                         Double.parseDouble(s.get(3)),
                         Boolean.parseBoolean(s.get(4))))
                 .collect(Collectors.toSet());

@@ -132,7 +132,7 @@ public class ParserUtil {
     public static Task parseTask(String task) {
         requireNonNull(task);
         String trimmedTask = task.trim();
-        return new Task(trimmedTask, null,null, 0, false);
+        return new Task(trimmedTask, null, null, 0, false);
     }
 
 

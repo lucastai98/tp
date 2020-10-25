@@ -108,14 +108,14 @@ class JsonAdaptedTask {
             throw new IllegalValueException(Task.IS_DONE_MESSAGE_CONSTRAINTS);
         }
         Task task = null;
-        if(deadline==null){
+        if (deadline == null) {
             task = new Task(taskName,
                     description,
                     null,
                     Double.parseDouble(progress),
                     Boolean.parseBoolean(isDone));
 
-        }else {
+        } else {
             task = new Task(taskName,
                     description,
                     new Deadline(deadline),
